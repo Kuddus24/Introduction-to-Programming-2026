@@ -1,0 +1,46 @@
+// Q4)The International Standard Book Number (ISBN) is a 10-digit code of the form d10d9d8d7...d2d1
+// that uniquely specifies a book. The rightmost digit d1 is a checksum digit that must be chosen
+// to satisfy the following condition:
+// d1 + 2*d2 + 3*d3 + · · · + 10*d10 ≡ 0 (mod 11)
+// Note that the checksum digit d1 can range from 0 to 10 (inclusive); if d1 = 10, it is represented
+// as X. Write a C program that reads a 9-digit integer, computes the checksum digit, and prints
+// the full 10-digit ISBN.
+// Sample input: 020131452
+// Sample output: 0201314525
+// Explanation: The correct checksum digit is 5, since:
+
+// 5 + 2*2 + 3*5 + 4*4 + 5*1 + 6*3 + 7*1 + 8*0 + 9*2 + 10*0 = 88 ≡ 0 (mod 11)
+
+#include<stdio.h>
+
+int main(){
+    char isbn[10];
+    int sum = 0;
+    printf("Enter 9 digit isbn: ");
+    scanf("%9s",isbn);
+     /*
+       isbn[0] = d10
+       isbn[1] = d9
+       ...
+       isbn[8] = d2
+    */
+
+    // Calculate:
+    // 2*d2 + 3*d3 + ... + 10*d10
+    for(int i=0;i<9;i++){
+        int digit = isbn[i] -'0';
+        int weight = 10-i;
+        sum=sum+weight*digit;
+    }
+    //find d1;
+    int checksum = (11-(sum%11))%11;
+    //print original 9 char of isbn
+    printf("ISBN: %s",isbn);
+    if(checksum == 10){
+        printf("X\n");
+    }
+    else{
+        printf("%d\n",checksum);
+    }
+    return 0;
+}
