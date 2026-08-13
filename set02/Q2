@@ -1,0 +1,33 @@
+//  Q2) Write a program to count the number of occurrences of each letter A-Z or a-z in the input. The
+// input may span multiple lines. While counting letters, do not distinguish between uppercase
+// and lowercase letters. Ignore all non-letter characters, e.g., digits, punctuation, spaces and
+// tabs. You should print, in alphabetical order, only the letters that actually occur in the input,
+// along with their counts (≥ 1).
+
+#include<stdio.h>
+
+int main(){
+    int count[26]={0};
+    int ch;
+    //read input untill EOF;
+    while((ch=getchar())!='\n' && ch!=EOF){
+        //if upper case appears;
+        if(ch >='A' && ch <='Z'){
+            ch = ch + ('a'- 'A');
+            count[ch-'a']++;
+        }
+        else if (ch >='a' && ch <='z'){
+            count[ch -'a']++;
+        }
+
+        //and ignor all other characters;
+    }
+    //print in alphabetical order;
+    for(int i=0;i<26;i++){
+        if(count[i]> 0){
+            printf("%c  %d\n",'a'+i,count[i]);
+        }
+    }
+    return 0;
+
+}
