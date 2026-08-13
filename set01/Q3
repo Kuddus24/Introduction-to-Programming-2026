@@ -1,0 +1,15 @@
+//Assignment1-Q3: Given two number find there GCD
+#include<stdio.h>
+
+int main() {
+    int a , b;
+    printf("Enter two non negative number : ");
+    scanf("%d %d", &a, &b);
+    while(b!=0){
+        int temp =b;
+        b = a%b;
+        a = temp;
+    }
+    printf("The GCD  is : %d\n", a);
+    return 0;
+}
