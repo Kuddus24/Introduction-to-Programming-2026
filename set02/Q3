@@ -1,0 +1,75 @@
+//  Q3: Run-length encoding (RLE) is a form of lossless data compression in which runs of data
+// (consecutive occurrences of the same data value) are stored as a single occurrence of that
+// data value and a count of its consecutive occurrences, rather than as the original run. For
+// example, the run-length encoded form of aaabccd is a3bc2d.
+// (a) Write a program to convert a given string s, consisting of at most 100 letters (lower
+// / upper case), to s
+// , its run-length encoded form. This means that s will contain the
+// same sequence of distinct characters as s, but any m > 1 consecutive occurrences of a
+// character will be replaced by a single occurrence of the character immediately followed
+// by the integer m (in base 10).
+// (b) Write a program to decode a given run-length encoded string s
+// to its original form s. For
+// example, given Aa3bC2d, your program should print AaaabCCd. Similarly, given abcd,
+// your program should print abcd itself; given z10, your program should print zzzzzzzzzz.
+
+//##############a. Encoding ###################
+#include<stdio.h>
+
+int main(){
+    char s[100];
+    printf("Enter a string: ");
+    scanf("%100s",s);
+    int i =0;
+    while(s[i]!='\0'){
+        char current =s[i];
+        int count = 0;
+        while(s[i]== current){
+            count++;
+            i++;
+        }
+        //print character
+    printf("%c",current);
+    if(count>1){
+        printf("%d",count);
+    }
+    
+
+    }
+    printf("\n");
+    return 0;
+    
+}
+
+//############### Decoding #######################
+
+
+#include<stdio.h>
+#include<ctype.h>
+
+int main(){
+    char s[1000];
+    printf("Enter encoding string: ");
+    scanf("%999s",s);
+    int i = 0;
+    while(s[i]!='\0'){
+        char ch=s[i];
+        //print the character atleast once;
+        printf("%c",ch);
+        i++;
+        //if digit follows the character;
+        if(isdigit(s[i])){
+            int count = 0;
+            //convert all consecutive digit into integers;
+            while(isdigit(s[i])){
+                count = count*10 + (s[i] -'0');
+                i++;
+            }
+            for(int j=1;j<count;j++){       //as we already printed one charater so now we print it in count-1 times;
+                printf("%c",ch);
+            }
+        }
+    }
+    printf("\n");
+    return 0;
+}
