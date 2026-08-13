@@ -1,0 +1,74 @@
+//Assignment1-Q3
+//Read a predefined number of integers from the standard input (std in) and do the following:
+// (i) Print the sum of the numbers
+// (ii) Print the average of the numbers
+// (iii) Sort the numbers using insertion sort
+// (iv) Find the median of the numbers
+
+#include<stdio.h>
+
+
+int main(){
+int n;
+printf("Enter the total number of integers: ");
+scanf("%d", &n);
+int arr[n];
+printf("Enter predefined number of integers: ");
+for(int i=0; i < n; i++){
+    scanf("%d", &arr[i]);
+}
+//(i) Print the sum of numbers;
+int sum = 0;
+for(int i =0; i < n ; i++){
+    sum+=arr[i];
+}
+printf("The sum of the predefined %d number of integers is: %d\n", n , sum);
+
+//(ii)Print average of the integers;
+printf("The average of %d integers is : %.2f\n", n, (float)sum/n);
+
+// (iii) Sort the numbers using bubble sort
+for(int i=0; i < n -1; i++){
+    for(int j = 0; j< n-1-i;j++){
+        if(arr[j]>arr[j+1]){
+            int temp = arr[j+1];
+            arr[j+1] = arr[j];
+            arr[j] = temp;
+        }
+    }
+}
+for( int i = 0; i< n; i++){
+    printf("%d\t", arr[i]);
+    
+}
+printf("\n");
+// (iii) Sort the numbers using insertion sort
+for(int i=1;i<n;i++){
+    int key = arr[i];
+    int j = i -1;
+    while(j>=0 && arr[j]>key){
+        arr[j+1] = arr[j];
+        j = j -1;
+
+    }
+    arr[j+1] = key;
+
+
+}
+for( int i = 0; i< n; i++){
+    printf("%d\t", arr[i]);
+}
+printf("\n");
+
+
+// (iv) Find the median of the numbers
+if ( n%2 == 0){
+    //in array we took 0 based indexing 
+    printf("Median is :%.2f \n",(float)(arr[n/2-1]+arr[n/2])/2);
+}
+else {
+    printf("Median is : %d\n",arr[(n+1)/2-1]);
+}
+
+return 0;
+}
