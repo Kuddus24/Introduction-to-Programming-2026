@@ -1,0 +1,60 @@
+// 4. Recall that a permutation π of the integers [n] = {0, 1, 2, . . . , n − 1} may be represented by
+// an array A of length n, by setting A[i] = π(i). Write a C program which, given n and a list
+// A of space-separated integers, determines
+// (a) whether A represents a permutation π of [n], and
+// (b) prints π^−1
+// in the same format if the answer to the above question is yes.
+#include<stdio.h>
+int main(){
+    int n;
+    printf("Enter value of n: ");
+    scanf("%d",&n);
+    int A[n];
+    int visited[n];
+    int inverse[n];
+    //initially no element in visited list;
+    for(int i=0;i<n;i++){
+        visited[i]=0;
+    }
+    printf("Enter %d integers:  ",n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&A[i]);
+    }
+    int isPermutation = 1;
+    //check for valid permutation;
+    for(int i=0;i<n;i++){
+        if(A[i]<0 || A[i]>=n)
+        {
+            isPermutation =0;
+            break;
+        }
+        //check for duplicates
+        if(visited[A[i]]==1){
+            isPermutation =0;
+            break;
+        }
+        //Mark A[i] as visited;
+        visited[A[i]]=1;
+        //construct an inverse permutaion;
+        inverse[A[i]] = i;
+
+    }
+    if (isPermutation){
+        printf("A represent a permutaion.\n");
+        printf("Inverse permutaiton: ");
+        for(int i=0;i<n;i++){
+            printf("%d",inverse[i]);
+            if(i<n-1){
+                printf(" ");
+            }
+            
+
+        }
+        printf("\n");
+    }
+    else{
+        printf("Not a valid permutaion.\n");
+    }
+    return 0;
+
+}
