@@ -1,0 +1,24 @@
+// Q2.Given an integer n fing nth Fibonacci number
+
+#include<stdio.h>
+
+int main(){
+    int n;
+    printf("Enter any positive integer: ");
+    scanf("%d",&n);
+    long long a = 0, b = 1, c;
+    if (n == 0){
+        printf("Fibonacci= %lld", a);
+    }
+    if(n == 1){
+        printf("Fibonacci =%lld", b);
+
+    }
+    for(int i =1; i<n;i++){
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    printf("The %dth Fibonacci number is : %lld\n", n, c);
+    return 0;
+}
