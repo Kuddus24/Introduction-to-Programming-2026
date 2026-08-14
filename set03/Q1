@@ -1,0 +1,49 @@
+// Write a C program that can add two positive integers. The input integers may contain up to
+// 100 digits (0–9). Thus, you will not be able to use the usual builtin types (int, long int, etc.)
+// to store the inputs. You may not use the GNU Multiple Precision (MP) Arithmetic Library,
+// or any other similar library or C++ class.
+#include<stdio.h>
+#include<string.h>
+#define MAX 101
+
+int main(){
+    char a[MAX],b[MAX];
+    char result[MAX+1];
+    int len1,len2;
+    int carry =0;
+    int i,j,k;
+    printf("Enter the first number: \n");
+    scanf("%100s",a);
+    printf("Enter the second number: \n");
+    scanf("%100s",b);
+    len1=strlen(a);
+    len2=strlen(b);
+    i= len1-1;
+    j=len2-1;
+    k=0;
+    //add two numbers from right to left
+    while(i>=0 || j>=0 || carry!=0){
+        int digit1=0;
+        int digit2 = 0;
+        if(i>=0){
+            digit1 = a[i]-'0';
+            i--;
+        }
+        if(j>=0){
+            digit2=b[j]-'0';
+            j--;
+        }
+        int sum = digit1 + digit2 + carry;
+        result[k] = (sum%10)+'0';
+        carry = sum/10;
+        k++;
+
+    }
+    printf("The sum is: ");
+    for(i=k-1;i>=0;i--){
+        printf("%c",result[i]);
+    }
+    printf("\n");
+    return 0;
+
+}
