@@ -1,0 +1,141 @@
+// Assignment3 Q2)Let A, B and C be 3 matrices with integer entries. Write a program to compute ABC. If
+// ABC is not defined, your program should print an error message. The sizes of A, B and C
+// will only be known at runtime. Your program should dynamically allocate memory to store
+// these matrices. You should also try to minimise the number of arithmetic operations required
+// to compute the product. You may assume that all entries of all the matrices involved can be
+// stored as int type variables.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct{
+    int rows;
+    int cols;
+    int **data;
+}Matrix;
+
+//dynamicallly create a  matrix
+Matrix creatematrix(int rows, int cols){
+    Matrix M;
+    M.rows=rows;
+    M.cols=cols;
+    M.data=(int **)malloc(rows*sizeof(int *));
+    for(int i=0;i<rows;i++){
+        M.data[i]=(int *)malloc(cols*sizeof(int));
+    }
+    return M;
+}
+//free dynamically allocated matrix
+void freematrix(Matrix M){
+    for(int i=0;i<M.rows;i++){
+        free(M.data[i]);
+    }
+    free(M.data);
+}
+
+//Read matrix;
+void readmatrix(Matrix M){
+    for(int i=0;i<M.rows;i++){
+        for(int j=0;j<M.cols;j++){
+            scanf("%d",&M.data[i][j]);
+        }
+    }
+}
+
+//Print matrix
+void printmatrix(Matrix M){
+    for(int i=0;i<M.rows;i++){
+        for(int j=0;j<M.cols;j++){
+            printf("%d ",M.data[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+//Matrix multiplication;
+Matrix multiply(Matrix A, Matrix B){
+    Matrix C=creatematrix(A.rows, B.cols);
+    for(int i=0;i<A.rows;i++){
+        for(int j=0;j<B.cols;j++){
+            C.data[i][j]= 0;
+        
+            for(int k =0;k<A.cols;k++){
+                 C.data[i][j]+=A.data[i][k]*B.data[k][j];
+        }
+    }
+}
+
+    return C;
+}
+
+
+int main(){
+    Matrix A, B , C;
+    Matrix X, result;
+    int rA, cA;
+    int rB, cB;
+    int rC, cC;
+    printf("Enter rows and colums of A: \n");
+    scanf("%d %d",&rA, &cA);
+    printf("Enter rows and columns of B: \n");
+    scanf("%d %d",&rB, &cB);
+    printf("Enter rows  and columns of C: \n");
+    scanf("%d %d", &rC, &cC);
+
+//check whether ABC is defined;
+if (cA!=rB || cB!=rC ){
+    printf("Error: ABC is not defined.\n");
+    return 0;
+}
+
+//dynamically create matrices
+A=creatematrix(rA,cA);
+B=creatematrix(rB,cB);
+C=creatematrix(rC,cC);
+
+//input matrices
+printf("\nEnter elements of A\n");
+readmatrix(A);
+printf("\nEnter elements of B\n");
+readmatrix(B);
+printf("\nEnter elements of C\n");
+readmatrix(C);
+
+/*
+       Cost of (AB)C:
+       rA*cA*cB + rA*cB*cC
+
+       Cost of A(BC):
+       rB*cB*cC + rA*cA*cC
+    */
+
+long long costAB_C =(long long)rA*cA*cB + (long long)rA*cB*cC;
+long long costA_BC =(long long)rB*cB*cC + (long long)rA*cA*cC;
+
+
+if(costAB_C < costA_BC){
+    printf("\nComputing AB_C.......\n");
+    X = multiply(A,B);
+    result = multiply(X,C);
+
+    freematrix(X);
+}
+else{
+    printf("\nComputing A_BC........\n");
+    X=multiply(B,C);
+    result = multiply(A,X);
+    freematrix(X);
+}
+    printf("\nABC =\n");
+    printmatrix(result);
+
+
+    // Free all allocated memory
+    freematrix(A);
+    freematrix(B);
+    freematrix(C);
+    freematrix(result);
+
+    return 0;
+
+}
