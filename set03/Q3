@@ -1,0 +1,62 @@
+// Assignment3 Q3)A sequence {s1, s2, ..., sm} of m > 1 strings is said to satisfy property P if
+//  all the strings s1, s2, . . . , sm are of the same length; and
+//  for any i (1 ≤ i ≤ m − 1), the strings si and si+1 differ in at most two positions. Write
+// a program that takes a sequence of strings as input, and determines whether the strings
+// satisfy property P or not.
+// Input format: The input will consist of a positive integer m, followed by m strings. Each
+// string will appear on a line by itself, and will consist of at most 63 lowercase letters.
+// Output format: Your program should print either YES or NO, depending on whether the
+// given sequence satisfies property P or not.
+// Sample input 1: 4
+// cost
+// boat
+// boot
+// foot
+// Sample output 1: YES
+// Explanation: From cost to boat, 2 letters have changed; for each subsequent pair, exactly 1
+// letter has changed.
+
+
+
+#include<stdio.h>
+#include<string.h>
+
+int main(){
+    int m;
+    char current[64];
+    char previous[64];
+    int valid =1;
+    //read number of string;
+    scanf("%d",&m);
+    //read first string;
+    scanf("%63s",previous);
+    //compare with remaining string;
+    for(int i=1;i<m;i++){
+        scanf("%63s",current);
+        //check length;
+        if(strlen(current)!=strlen(previous)){
+            valid = 0;
+            break;
+        }
+        int difference = 0;
+        for(int j=0;j<strlen(current);j++){
+            if(previous[j]!=current[j]){
+                difference++;
+            }
+        }
+//if more than two  difference
+        if(difference>2){
+            valid=0;
+            break;
+        }
+        strcpy(previous,current);
+    }
+if(valid==1)
+    printf("YES\n");
+    
+else
+    printf("NO\n");
+
+
+return 0;
+}
