@@ -1,0 +1,48 @@
+// Assignment3 A4)Consider a point that starts from the origin, and moves East, West, North or South for M
+// steps. Write a program that takes the directions of the M steps, and computes the final
+// distance of the point from the origin. (Assume that in each step, the point travels unit
+// distance.)
+
+// Input format: A sequence of letters from the set {E, W, N, S} denoting the direction of move-
+// ment of the point at each step. The length of the sequence will NOT be given to you in
+
+// advance. The first character not belonging to the set will mark the end of the input.
+// Output format: Your program should print the distance from the final position of the point
+// to the origin, as a floating point number.
+// Sample input 1: EWNS
+// Sample output 1: 0.000000
+// Sample input 1: WSSW
+// Sample output 1: 2.828283
+
+
+#include<stdio.h>
+#include<math.h>
+
+int main(){
+    int x = 0;
+    int y = 0;
+    char ch;
+    //read character untill an invalid char is arrive;
+    while(scanf("%c",&ch)==1){
+        if(ch == 'E'){
+            x++;
+        }
+        else if(ch == 'W'){
+            x--;
+        }
+        else if(ch == 'N'){
+            y++;
+        }
+        else if(ch == 'S'){
+            y--;
+        }   
+        else{
+            break;
+        } 
+    }
+    //calculate the distance
+    double distance = sqrt((x*x)+(y*y));
+    printf("%f\n", distance);
+    return 0;
+
+}
