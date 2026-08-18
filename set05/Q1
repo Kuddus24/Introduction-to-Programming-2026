@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int n;
+
+int add(int a, int b){
+	return a + b;
+}
+
+int main(){
+	int x = 10;
+	int y = 27;
+	int *p;
+
+	printf("%d\n", add(x,y));
+	p = (int *)malloc(10 * sizeof(int));
+
+	printf("Code: function add at  %p\n", (void *)add);
+	printf("Code: function main at %p\n", (void *)main);
+	printf("Data: variable n at    %p\n", &n);
+	printf("Stack: variable x at   %p\n", &x);
+	printf("Stack: variable y at   %p\n", &y);
+	printf("Stack: variable p at   %p\n", &p);
+	printf("Heap:  var p points to %p\n", p);
+  free(p);
+  return 0;
+}
+
+/*
+//what this code does//
+It demonstrate the typical memory area..
+        Process Memory
+┌─────────────────────────┐
+│ Code / Text             │ ← functions (add, main)
+├─────────────────────────┤
+│ Data                    │ ← global variable n
+├─────────────────────────┤
+│ Heap                    │ ← malloc()
+│                         │
+├─────────────────────────┤
+│ Stack                   │ ← local variables x,y,p
+└─────────────────────────┘
+
+1.Global variable: n is declared outside all functions, so it is a global variable.
+2.Functions → Code/Text area,At what memory address is the machine code for add() located?At what memory address is the machine code for main() located?
+3.Local Variable: x,y,p local variables, so they normally reside on the stack.
+4.malloc() → Heap ,bytes are requested from the heap.malloc() returns the address of that memory.
+
+Difference between &p and p
+
+This is probably the most important concept in this program.
+Suppose:
+
+p = 0x5000
+
+Then:
+
+&p
+
+is the address of the pointer variable itself.
+For example:
+
+Stack
+
+Address 0x7000
+       ┌───────────┐
+       │     p     │
+       │  0x5000   │
+       └───────────┘
+           ↑
+          &p
+
+But p contains:
+
+0x5000
+
+which points to the heap:
+
+Heap
+
+0x5000
+┌────┬────┬────┬────┬────┐
+│    │    │    │    │ ...│
+└────┴────┴────┴────┴────┘
+
+Therefore:
+
+&p
+
+→ address of the pointer variable p (stack)
+
+while:
+
+p
+
+→ address of the dynamically allocated memory (heap)
+/*
